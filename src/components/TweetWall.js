@@ -10,9 +10,23 @@ class TweetWall extends React.Component {
     };
   }
 
-  // TODO: componentWillMount()
-  // TODO: shouldComponentUpdate()
-  // TODO: componentWillReceiveProps()
+  componentWillMount() {
+    this.setState({
+      tweets: this.state.tweets.concat(this.props.newTweets),
+    })
+  }
+  
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps.newTweets.length > 0;
+  }
+  
+  componentWillReceiveProps(nextProps) {
+    let addNewTweets = nextProps.newTweets.concat(this.state.tweets);
+
+    this.setState({
+      tweets: addNewTweets,
+    });
+  }
 
   render() {
     const tweets = this.state.tweets.map((tweet, index) => <Tweet text={tweet.text} key={index} />);
